@@ -63,6 +63,7 @@ class addnote : AppCompatActivity() {
     private lateinit var database: Notedatabase
     private lateinit var notesDao: Notesdao
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -332,5 +333,6 @@ class addnote : AppCompatActivity() {
 
 
     }
+
 
 }

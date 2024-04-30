@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/splashbgcolor"
     tools:context=".audiorecd">
 
     <TextView
@@ -32,6 +33,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/rounded_close_disabled"
+            android:backgroundTint="@color/splashbgcolor"
             android:background="@drawable/ic_ripple"
             >
 
@@ -42,12 +44,14 @@
         android:layout_height="80dp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+
         android:background="@drawable/ic_record"/>
         <ImageButton
             android:id="@+id/btnlist"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/round_list"
+            android:backgroundTint="@color/splashbgcolor"
             android:background="@drawable/ic_ripple"/>
         <ImageButton
             android:id="@+id/btndone"
@@ -55,6 +59,7 @@
             android:layout_height="56dp"
             android:src="@drawable/round_done"
             android:visibility="gone"
+            android:backgroundTint="@color/splashbgcolor"
             android:background="@drawable/ic_ripple"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

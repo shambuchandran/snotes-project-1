@@ -26,8 +26,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/black"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/arrow_back" />
+                android:scaleType="center"
+                app:srcCompat="@drawable/arrow_back"
+                app:tint="@color/splashbgcolor" />
 
             <TextView
                 android:id="@+id/tvaddnotes"
@@ -39,7 +40,7 @@
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:text="ADD NOTES"
-                android:textColor="@color/liteblue"
+                android:textColor="@color/splashbgcolor"
                 android:textSize="20sp" />
 
             <ImageButton
