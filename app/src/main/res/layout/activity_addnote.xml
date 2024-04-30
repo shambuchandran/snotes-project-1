@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/splashbgcolor"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/maingrey"
+                android:background="@color/black"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/arrow_back" />
 
@@ -33,11 +34,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/maingrey"
+                android:background="@color/black"
                 android:fontFamily="@font/poppins_extrabold"
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:text="ADD NOTES"
+                android:textColor="@color/liteblue"
                 android:textSize="20sp" />
 
             <ImageButton
@@ -45,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/maingrey"
+                android:background="@color/black"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/alarm_add" />
@@ -55,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/maingrey"
+                android:background="@color/black"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/record_voice" />
@@ -65,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/maingrey"
+                android:background="@color/black"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/add_photo" />
@@ -77,104 +79,90 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/showdatetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp">
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:hint="datetime"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/showdatetime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:gravity="center"
-                    android:hint="datetime"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <TextView
+                android:id="@+id/alarm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:layout_weight="1"
-                app:cardCornerRadius="20dp">
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:hint="alarm"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:id="@+id/alarm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:fontFamily="@font/poppins_extrabold"
-                    android:gravity="center"
-                    android:hint="alarm"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollViewImages"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvimage"
             android:layout_width="match_parent"
-            android:layout_height="140dp">
+            android:layout_height="88dp"
+            android:orientation="horizontal"
+            android:padding="4dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="140dp"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    app:srcCompat="@drawable/add_photo" />
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollViewaudios"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvaudio"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="20dp">
-
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:srcCompat="@drawable/record_voice" />
-                </androidx.cardview.widget.CardView>
-
-
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
-
+            android:layout_height="52dp"
+            android:orientation="horizontal"
+            android:padding="4dp" />
 
         <ScrollView
             android:id="@+id/verticalScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="4dp">
 
-                <jp.wasabeef.richeditor.RichEditor
-                    android:id="@+id/rich_editor"
+                <TextView
+                    android:id="@+id/etTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:backgroundTint="@color/white" />
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:hint="Title"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/etsubtitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:hint="SubTitle"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <com.yahiaangelo.markdownedittext.MarkdownEditText
+                    android:id="@+id/etNoteContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="Note"
+                    android:importantForAutofill="no"
+                    android:inputType="none"
+                    android:padding="4dp"
+                    android:textSize="16sp">
+
+                </com.yahiaangelo.markdownedittext.MarkdownEditText>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -188,7 +176,7 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/addnotecheck_"
         android:translationZ="2dp"
-        app:backgroundTint="@color/maingrey" />
+        app:backgroundTint="@color/white" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

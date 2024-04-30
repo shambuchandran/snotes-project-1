@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.snotes.database.Notedatabase
 import com.example.snotes.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         }
         addnotebutton=binding.btnaddnote
         addnotebutton.setOnClickListener {
+            Notedatabase.deleteDatabase(this)
             startActivity(Intent(this,addnote::class.java))
         }
         recyclerView = binding.rvmain

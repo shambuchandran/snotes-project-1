@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@color/Backgrounggrey"
+    android:background="@color/splashbgcolor"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:id="@+id/headinglinear"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,27 +23,24 @@
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:background="@color/maingrey"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/black"
             android:fontFamily="@font/poppins_extrabold"
             android:gravity="start|center_vertical"
             android:paddingStart="16dp"
             android:text="NOTES"
+            android:textColor="@color/splashbgcolor"
             android:textSize="24sp"
             android:textStyle="bold" />
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:drawableEnd="@drawable/outline_search"
-            android:layout_weight="1"
-            android:background="@color/maingrey"
-            android:gravity="center|start"
-            android:hint="Search here"
-            android:padding="10dp"/>
 
-            </LinearLayout>
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search"
+            />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvmain"
@@ -62,7 +59,7 @@
         android:layout_height="64dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/maingrey"
+        android:backgroundTint="@color/black"
         android:translationZ="5dp"
         app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
