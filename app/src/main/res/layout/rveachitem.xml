@@ -34,21 +34,12 @@
                     android:layout_height="match_parent"
                     android:src="@drawable/add_photo" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/alarm_add" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/fonts" />
             </ViewFlipper>
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="148dp"
+                android:layout_height="40dp"
                 app:srcCompat="@drawable/record_voice" />
 
             <TextView

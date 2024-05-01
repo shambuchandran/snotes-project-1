@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/black"
+                android:background="@color/blacklite"
                 android:scaleType="center"
                 app:srcCompat="@drawable/arrow_back"
                 app:tint="@color/splashbgcolor" />
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/black"
+                android:background="@color/blacklite"
                 android:fontFamily="@font/poppins_extrabold"
                 android:gravity="center"
                 android:paddingTop="5dp"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/black"
+                android:background="@color/blacklite"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/alarm_add" />
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/black"
+                android:background="@color/blacklite"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/record_voice" />
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/black"
+                android:background="@color/blacklite"
                 android:padding="0dp"
                 android:scaleType="centerInside"
                 app:srcCompat="@drawable/add_photo" />
@@ -131,23 +131,25 @@
                 android:orientation="vertical"
                 android:padding="4dp">
 
-                <TextView
+                <EditText
                     android:id="@+id/etTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:hint="Title"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"/>
 
-                <TextView
+                <EditText
                     android:id="@+id/etsubtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:hint="SubTitle"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:background="@android:color/transparent"/>
 
                 <com.yahiaangelo.markdownedittext.MarkdownEditText
                     android:id="@+id/etNoteContent"
@@ -176,8 +178,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/addnotecheck_"
+        app:tint="@color/white"
         android:translationZ="2dp"
-        app:backgroundTint="@color/white" />
+        app:backgroundTint="@color/addnoteButtontcolor" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
