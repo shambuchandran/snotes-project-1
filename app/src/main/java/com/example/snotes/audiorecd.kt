@@ -1,9 +1,12 @@
 package com.example.snotes
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.media.MediaRecorder
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +29,10 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
     private var filename = ""
     private var isrecording = false
     private var ispaused = false
+    private  lateinit var vibrator: Vibrator
     private lateinit var timer: Timer
+    private lateinit var waveFormView: waveFormView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,8 +57,11 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
                 isrecording -> pauseRecording()
                 else -> startRecording()
             }
+            vibrator.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.DEFAULT_AMPLITUDE))
         }
         timer= Timer(this)
+        vibrator= getSystemService(Context.VIBRATOR_SERVICE)as Vibrator
+        waveFormView = binding.waveFormView
 
     }
 
@@ -111,8 +120,9 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
         timer.start()
 
     }
-
     override fun onTimerChange(duration: String) {
       binding.tvtimer.text=duration
+        waveFormView.addAmplitude(recorder.maxAmplitude.toFloat())
+
     }
 }
