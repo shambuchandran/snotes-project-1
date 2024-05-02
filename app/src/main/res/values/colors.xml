@@ -17,6 +17,7 @@
     <color name="greydark">#656565</color>
     <color name="greydisabled">#8F8F8F</color>
     <color name="TEXTCOLOR">#282828</color>
+    <color name="transperentbackground">#61000000</color>
 
 
 </resources>

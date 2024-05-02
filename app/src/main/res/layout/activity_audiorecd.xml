@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,72 +8,85 @@
     android:layout_height="match_parent"
     android:background="@color/splashbgcolor"
     tools:context=".audiorecd">
-
-    <TextView
-        android:id="@+id/tvtimer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/timerstart"
-        android:textSize="56sp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
-
-    <com.example.snotes.waveFormView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:id="@+id/wave_form_view"
-        android:layout_height="350px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
+        <TextView
+            android:id="@+id/tvtimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/timerstart"
+            android:textSize="56sp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.284" />
+
+        <com.example.snotes.waveFormView
+            android:layout_width="match_parent"
+            android:id="@+id/wave_form_view"
+            android:layout_height="350px"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageButton
+                android:id="@+id/btndelete"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ic_ripple"
+                android:backgroundTint="@color/splashbgcolor"
+                android:src="@drawable/rounded_close_disabled">
+
+            </ImageButton>
+
+            <ImageButton
+                android:id="@+id/btnrecord"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/ic_record" />
+
+            <ImageButton
+                android:id="@+id/btnlist"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ic_ripple"
+                android:backgroundTint="@color/splashbgcolor"
+                android:src="@drawable/round_list" />
+
+            <ImageButton
+                android:id="@+id/btndone"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/ic_ripple"
+                android:backgroundTint="@color/splashbgcolor"
+                android:src="@drawable/round_done"
+                android:visibility="gone" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_height="match_parent"
+        android:id="@+id/bottomsheetbackground"
+        android:visibility="gone"
+        android:background="@color/transperentbackground"/>
 
-        <ImageButton
-            android:id="@+id/btndelete"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/ic_ripple"
-            android:backgroundTint="@color/splashbgcolor"
-            android:src="@drawable/rounded_close_disabled">
+    <include layout="@layout/bottomsheet"/>
 
-        </ImageButton>
-
-        <ImageButton
-            android:id="@+id/btnrecord"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:background="@drawable/ic_record" />
-
-        <ImageButton
-            android:id="@+id/btnlist"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/ic_ripple"
-            android:backgroundTint="@color/splashbgcolor"
-            android:src="@drawable/round_list" />
-
-        <ImageButton
-            android:id="@+id/btndone"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/ic_ripple"
-            android:backgroundTint="@color/splashbgcolor"
-            android:src="@drawable/round_done"
-            android:visibility="gone" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

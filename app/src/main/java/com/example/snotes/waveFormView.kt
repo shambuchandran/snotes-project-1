@@ -37,6 +37,13 @@ class waveFormView(context: Context?, attrs: AttributeSet?) : View(context, attr
         }
         invalidate()
     }
+    fun clearamps():ArrayList<Float>{
+        var ampsclone = amplitudes.clone() as ArrayList<Float>
+        amplitudes.clear()
+        spikes.clear()
+        invalidate()
+        return ampsclone
+    }
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
         spikes.forEach{
