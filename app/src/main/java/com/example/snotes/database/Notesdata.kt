@@ -12,5 +12,7 @@ data class Notesdata(
     val text:String,
     val date: String,
     val imagePaths:List<String> = emptyList(),
-    val audioPaths: List<String> = emptyList()
+    val audioPaths: List<String> = emptyList(),
+    val audioDuration: List<String> = emptyList(),
+    val audioFilename:List<String> = emptyList()
 )

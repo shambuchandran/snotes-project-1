@@ -1,6 +1,8 @@
 package com.example.snotes
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.media.MediaRecorder
@@ -21,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.snotes.database.Notedatabase
 import com.example.snotes.databinding.ActivityAudiorecdBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
@@ -55,6 +58,9 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
     private lateinit var filenameInput:TextInputEditText
     private lateinit var cancelButton:Button
     private lateinit var okeyButton:Button
+    var filePath=""
+    private lateinit var dbaudio:Notedatabase
+    var audioDuration=""
     //private var keyboardHeight by Delegates.notNull<Int>()
 
 
@@ -114,6 +120,12 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
         okeyButton.setOnClickListener {
             save()
             dismiss()
+            val intent = Intent(this, addnote::class.java)
+            intent.putExtra("audioduration", audioDuration)
+            intent.putExtra("filepath", filePath)
+            setResult(Activity.RESULT_OK, intent)
+            startActivity(intent)
+            finish()
         }
         bottomsheetbg.setOnClickListener {
             File("$dirpath$filename.mp3").delete()
@@ -132,9 +144,6 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
         deleteButton.isClickable=false
         showTimer=binding.tvtimer
 
-
-
-
     }
     private fun save(){
         //bottomSheetBehavior.peekHeight = keyboardHeight
@@ -144,6 +153,7 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
             File("$dirpath$filename.mp3").renameTo(newfile)
             Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show()
         }
+         filePath= "$newFilename.mp3"
     }
     private fun dismiss(){
         bottomsheetbg.visibility =View.GONE
@@ -233,6 +243,7 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
     }
     override fun onTimerChange(duration: String) {
       binding.tvtimer.text=duration;
+        audioDuration=duration.dropLast(3)
         waveFormView.addAmplitude(recorder.maxAmplitude.toFloat())
 
     }

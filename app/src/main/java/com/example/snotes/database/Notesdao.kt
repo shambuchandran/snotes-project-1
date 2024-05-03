@@ -22,11 +22,18 @@ interface Notesdao {
     @Query("SELECT audioPaths FROM notes_data")
     fun getAllAudioPaths(): LiveData<List<String>>
 
+    @Query("SELECT audioDuration FROM notes_data")
+    fun getAllAudioDurations(): LiveData<List<String>>
+
+    @Query("SELECT audioFilename FROM notes_data")
+    fun getAllAudioFilenames(): LiveData<List<String>>
+
     @Update
     suspend fun update(notesData: Notesdata)
 
     @Delete
     suspend fun delete(notesData: Notesdata)
+
 
 
 }

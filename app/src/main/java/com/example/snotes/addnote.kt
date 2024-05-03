@@ -28,6 +28,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.snotes.alladaptors.AudioAdapter
 import com.example.snotes.alladaptors.ImageAdapter
 import com.example.snotes.database.Notedatabase
 import com.example.snotes.database.Notesdao
@@ -54,12 +55,17 @@ class addnote : AppCompatActivity() {
     private lateinit var pendingIntent: PendingIntent
     private val REQUEST_IMAGE_CAPTURE = 1
     private val REQUEST_PICK_IMAGE = 2
+    private val REQUEST_AUDIO_RECORD = 4
     private val MAX_IMAGES = 10
     private val MY_PERMISSIONS_REQUEST_CAMERA = 3
     private var imageList = listOf<String>()
+    private var audioList = mutableListOf<String>()
+    private var audioFilename = mutableListOf<String>()
+    private var audiodurationlist = mutableListOf<String>()
     private lateinit var imageRecyclerView: RecyclerView
     private lateinit var audioRecyclerView: RecyclerView
     private lateinit var imgAdaptor: ImageAdapter
+    private lateinit var audAdapter: AudioAdapter
     private lateinit var database: Notedatabase
     private lateinit var notesDao: Notesdao
 
@@ -74,6 +80,20 @@ class addnote : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        val intent = intent
+        val audioduration = intent.getStringExtra("audioduration")
+        val filepath = intent.getStringExtra("filepath")
+        audioList.addAll(listOf(filepath?: ""))
+        audioFilename.addAll(listOf(filepath?: ""))
+        audiodurationlist.addAll(listOf(audioduration?: ""))
+        //audAdapter = AudioAdapter(this,this)
+        //audAdapter.notifyItemInserted(audioList.size - 1)
+//        audioList = audioList.toMutableList().apply { add(filepath ?: "") }.toList()
+//        audioFilename=audioList.toMutableList().apply { add(filepath ?: "") }.toList()
+//        audiodurationlist = audiodurationlist.toMutableList().apply { add(audioduration ?: "") }.toList()
+
+
         database = Notedatabase.getDatabase(this)
         notesDao = database.notesdao()
 
@@ -110,7 +130,7 @@ class addnote : AppCompatActivity() {
                     }
 
                     R.id.recordaudio -> {
-                        startActivity(Intent(this,audiorecd::class.java))
+                        startActivity(Intent(this, audiorecd::class.java))
                         true
                     }
 
@@ -143,6 +163,14 @@ class addnote : AppCompatActivity() {
         imgAdaptor = ImageAdapter(this)
         imageRecyclerView.adapter = imgAdaptor
 
+        audioRecyclerView = binding.rvaudio
+        audioRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        audAdapter = AudioAdapter(this)
+        audAdapter.setAudioPaths(audioList,audiodurationlist,audioFilename )
+        audioRecyclerView.adapter = audAdapter
+        audAdapter.notifyDataSetChanged()
+
     }
 
     private fun saveNoteToDatabase() {
@@ -155,16 +183,21 @@ class addnote : AppCompatActivity() {
             title = title,
             subTitle = subTitle,
             text = text,
-            date = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault()).format(Calendar.getInstance().time),
-            imagePaths = imageList
+            date = SimpleDateFormat(
+                "yyyy-MM-dd hh:mm a",
+                Locale.getDefault()
+            ).format(Calendar.getInstance().time),
+            imagePaths = imageList,
+            audioPaths = audioList,
+            audioDuration = audiodurationlist
         )
 
         // Insert noteData into database using coroutines
         GlobalScope.launch(Dispatchers.IO) {
             notesDao.insert(noteData)
         }
-
-        // Navigate to MainActivity
+           //audAdapter.notifyDataSetChanged()
+//        audAdapter.setAudioPaths(audioList,audiodurationlist,audioFilename )
         startActivity(Intent(this, MainActivity::class.java))
     }
 
@@ -228,6 +261,7 @@ class addnote : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             // Image captured from camera
             val imageBitmap = data?.extras?.get("data") as Bitmap
@@ -240,8 +274,25 @@ class addnote : AppCompatActivity() {
                     MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
                 addImage(imageBitmap)
             }
+//        }else if (requestCode == REQUEST_AUDIO_RECORD && resultCode == Activity.RESULT_OK) {
+//                // Audio recorded
+//                val audioduration = intent.getStringExtra("audioduration")
+//                val filepath = intent.getStringExtra("filepath")
+//                filepath
+//                audioList.add(filepath ?: "")
+//                audiodurationlist.add(audioduration ?: "")
+//                audioFilename.add(filepath ?: "")
+//            Log.d("AudioAdapter", "Audio list size: ${audioList.size}")
+//            Log.d("AudioAdapter", "Audio duration list size: ${audiodurationlist.size}")
+//            Log.d("AudioAdapter", "Audio filename list size: ${audioFilename.size}")
+//                //audAdapter.notifyItemInserted(audioList.size - 1)
+//                audAdapter.setAudioPaths(audioList, audiodurationlist, audioFilename)
+//                audAdapter.notifyDataSetChanged()
+//            }
+
         }
     }
+
 
     private fun addImage(imageBitmap: Bitmap) {
         if (imageList.size < MAX_IMAGES) {
