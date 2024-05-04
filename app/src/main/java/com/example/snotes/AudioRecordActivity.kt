@@ -31,7 +31,7 @@ import java.io.File
 import java.io.IOException
 import java.util.Date
 
-class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
+class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
 
 
     private lateinit var amplitudes: ArrayList<Float>
@@ -120,12 +120,12 @@ class audiorecd : AppCompatActivity() ,Timer.OnTimerChangeListener{
         okeyButton.setOnClickListener {
             save()
             dismiss()
-            val intent = Intent(this, addnote::class.java)
+            val intent = Intent(this, AddNoteActivity::class.java)
             intent.putExtra("audioduration", audioDuration)
             intent.putExtra("filepath", filePath)
             setResult(Activity.RESULT_OK, intent)
-            startActivity(intent)
             finish()
+//            startActivity(intent)
         }
         bottomsheetbg.setOnClickListener {
             File("$dirpath$filename.mp3").delete()

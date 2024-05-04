@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         addnotebutton=binding.btnaddnote
         addnotebutton.setOnClickListener {
             Notedatabase.deleteDatabase(this)
-            startActivity(Intent(this,addnote::class.java))
+            startActivity(Intent(this,AddNoteActivity::class.java))
         }
         recyclerView = binding.rvmain
         recyclerView.layoutManager =
