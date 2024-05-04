@@ -30,7 +30,7 @@
             android:name=".AddNoteActivity"
             android:exported="false" />
         <activity
-            android:name=".loginpage"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".splash_screen"

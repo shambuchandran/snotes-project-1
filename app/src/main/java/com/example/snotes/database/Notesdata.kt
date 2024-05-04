@@ -11,6 +11,7 @@ data class Notesdata(
     val subTitle:String,
     val text:String,
     val date: String,
+    val alarm:String ="",
     val imagePaths:MutableList<String> = mutableListOf(),
     val audioPaths: MutableList<String> = mutableListOf(),
     val audioDuration: MutableList<String> = mutableListOf(),

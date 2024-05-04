@@ -14,6 +14,8 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.view.View
 import android.widget.DatePicker
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -86,6 +88,18 @@ class AddNoteActivity : AppCompatActivity() {
 
         database = Notedatabase.getDatabase(this)
         notesDao = database.notesdao()
+
+        try {
+            binding.etNoteContent.setOnFocusChangeListener{_,hasFocus ->
+                if (hasFocus){
+                    binding.bottomBar.visibility=View.VISIBLE
+                    binding.etNoteContent.setStylesBar(binding.styleBar)
+                }else{ binding.bottomBar.visibility=View.GONE
+                }
+            }
+        }catch (e :Throwable){
+            Log.d("Tag",e.stackTraceToString())
+        }
 
         addImageView = binding.imageBtnaddimage
         addImageView.setOnClickListener {
@@ -166,6 +180,7 @@ class AddNoteActivity : AppCompatActivity() {
         val title = binding.etTitle.text.toString() // Get title from UI
         val subTitle = binding.etsubtitle.text.toString() // Get subtitle from UI
         val text = binding.etNoteContent.getMD() // Get text from UI
+        val alarm= binding.alarm.text.toString()
 
         // Construct NoteData object
         val noteData = Notesdata(
@@ -176,6 +191,7 @@ class AddNoteActivity : AppCompatActivity() {
                 "yyyy-MM-dd hh:mm a",
                 Locale.getDefault()
             ).format(Calendar.getInstance().time),
+            alarm = alarm,
             imagePaths = imageList,
             audioPaths = audioList,
             audioDuration = audiodurationlist,
