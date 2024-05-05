@@ -181,8 +181,8 @@ class AddNoteActivity : AppCompatActivity() {
         val subTitle = binding.etsubtitle.text.toString() // Get subtitle from UI
         val text = binding.etNoteContent.getMD() // Get text from UI
         val alarm= binding.alarm.text.toString()
-
-        // Construct NoteData object
+        if (title.isNotEmpty() && text.isNotEmpty()) {
+            // Construct NoteData object
         val noteData = Notesdata(
             title = title,
             subTitle = subTitle,
@@ -197,12 +197,15 @@ class AddNoteActivity : AppCompatActivity() {
             audioDuration = audiodurationlist,
             audioFilename = audioFilenameList
         )
-
         // Insert noteData into database using coroutines
         GlobalScope.launch(Dispatchers.IO) {
             notesDao.insert(noteData)
         }
         startActivity(Intent(this, MainActivity::class.java))
+        } else {
+            // Show a message indicating that at least one field is required
+            Toast.makeText(this, "Sorry, Title and Content fields are required", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun checkCameraPermission() {
