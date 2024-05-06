@@ -121,7 +121,7 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/verticalScrollView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fillViewport="true">
 
@@ -154,9 +154,8 @@
                 <com.yahiaangelo.markdownedittext.MarkdownEditText
                     android:id="@+id/etNoteContent"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:layout_margin="4dp"
-                    android:layout_weight="1"
                     android:background="@null"
                     android:gravity="top"
                     android:hint="Note"

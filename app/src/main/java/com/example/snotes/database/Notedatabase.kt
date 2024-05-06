@@ -36,7 +36,7 @@ abstract class Notedatabase :RoomDatabase() {
             INSTANCE = null
         }
         fun deleteDatabase(context: Context) {
-            closeDatabase(context)
+            //closeDatabase(context)
             val databaseFile = context.getDatabasePath("notes_database")
             if (databaseFile.exists()) {
                 databaseFile.delete()

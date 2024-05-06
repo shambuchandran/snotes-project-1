@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
         }
         addnotebutton=binding.btnaddnote
         addnotebutton.setOnClickListener {
-            Notedatabase.deleteDatabase(this)
+            //Notedatabase.deleteDatabase(this)
+
             startActivity(Intent(this,AddNoteActivity::class.java))
         }
         notedatabase=Notedatabase.getDatabase(this)

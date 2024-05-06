@@ -356,7 +356,7 @@ class AddNoteActivity : AppCompatActivity(), OnItemClickListener {
                         val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.getDefault())
                         val formattedDateTime = dateFormat.format(calendar.time)
                         showalarm = binding.alarm
-                        showalarm.text = formattedDateTime
+                        showalarm.text = "alarm $formattedDateTime"
                         setReminder(calendar.timeInMillis)
                     },
                     calendar.get(Calendar.HOUR_OF_DAY),
