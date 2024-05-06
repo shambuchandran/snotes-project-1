@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.snotes.database.Notedatabase
 import com.example.snotes.databinding.ActivityAudiorecdBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.TextInputEditText
@@ -59,7 +58,7 @@ class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
     private lateinit var cancelButton:Button
     private lateinit var okeyButton:Button
     var filePath=""
-    private lateinit var dbaudio:Notedatabase
+    var fileName=""
     var audioDuration=""
     //private var keyboardHeight by Delegates.notNull<Int>()
 
@@ -99,7 +98,7 @@ class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
         }
         listButton=binding.btnlist
         listButton.setOnClickListener {
-            Toast.makeText(this, "List Button", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this,AddNoteActivity::class.java))
         }
         stopButton=binding.btndone
         stopButton.setOnClickListener {
@@ -123,6 +122,7 @@ class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
             val intent = Intent(this, AddNoteActivity::class.java)
             intent.putExtra("audioduration", audioDuration)
             intent.putExtra("filepath", filePath)
+            intent.putExtra("filename", fileName)
             setResult(Activity.RESULT_OK, intent)
             finish()
 //            startActivity(intent)
@@ -153,7 +153,8 @@ class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
             File("$dirpath$filename.mp3").renameTo(newfile)
             Toast.makeText(this, "Recording saved", Toast.LENGTH_SHORT).show()
         }
-         filePath= "$newFilename.mp3"
+         fileName= "$newFilename.mp3"
+         filePath= "$dirpath$filename.mp3"
     }
     private fun dismiss(){
         bottomsheetbg.visibility =View.GONE

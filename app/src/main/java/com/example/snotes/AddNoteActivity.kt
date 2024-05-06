@@ -46,7 +46,7 @@ import java.io.FileOutputStream
 import java.util.Locale
 
 
-class AddNoteActivity : AppCompatActivity() {
+class AddNoteActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var binding: ActivityAddnoteBinding
     private lateinit var addImageView: ImageButton
     private lateinit var addVoicenote: ImageButton
@@ -71,7 +71,8 @@ class AddNoteActivity : AppCompatActivity() {
     private lateinit var audAdapter: AudioAdapter
     private lateinit var database: Notedatabase
     private lateinit var notesDao: Notesdao
-    val audioItems = mutableListOf<AudioItem>()
+    var audioItems = mutableListOf<AudioItem>()
+    //private var list: MutableList<AudioItem>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,15 +91,16 @@ class AddNoteActivity : AppCompatActivity() {
         notesDao = database.notesdao()
 
         try {
-            binding.etNoteContent.setOnFocusChangeListener{_,hasFocus ->
-                if (hasFocus){
-                    binding.bottomBar.visibility=View.VISIBLE
+            binding.etNoteContent.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.bottomBar.visibility = View.VISIBLE
                     binding.etNoteContent.setStylesBar(binding.styleBar)
-                }else{ binding.bottomBar.visibility=View.GONE
+                } else {
+                    binding.bottomBar.visibility = View.GONE
                 }
             }
-        }catch (e :Throwable){
-            Log.d("Tag",e.stackTraceToString())
+        } catch (e: Throwable) {
+            Log.d("Tag", e.stackTraceToString())
         }
 
         addImageView = binding.imageBtnaddimage
@@ -135,7 +137,10 @@ class AddNoteActivity : AppCompatActivity() {
                     }
 
                     R.id.recordaudio -> {
-                        startActivityForResult(Intent(this, AudioRecordActivity::class.java),REQUEST_AUDIO_RECORD)
+                        startActivityForResult(
+                            Intent(this, AudioRecordActivity::class.java),
+                            REQUEST_AUDIO_RECORD
+                        )
                         true
                     }
 
@@ -169,10 +174,11 @@ class AddNoteActivity : AppCompatActivity() {
         audioRecyclerView = binding.rvaudio
         audioRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        audAdapter = AudioAdapter(this)
+        audAdapter = AudioAdapter(this, this)
         //audAdapter.setAudioPaths(audioList, audiodurationlist, audioFilename)
         audAdapter.setAudioPaths(audioItems)
         audioRecyclerView.adapter = audAdapter
+
 
     }
 
@@ -180,31 +186,32 @@ class AddNoteActivity : AppCompatActivity() {
         val title = binding.etTitle.text.toString() // Get title from UI
         val subTitle = binding.etsubtitle.text.toString() // Get subtitle from UI
         val text = binding.etNoteContent.getMD() // Get text from UI
-        val alarm= binding.alarm.text.toString()
+        val alarm = binding.alarm.text.toString()
         if (title.isNotEmpty() && text.isNotEmpty()) {
             // Construct NoteData object
-        val noteData = Notesdata(
-            title = title,
-            subTitle = subTitle,
-            text = text,
-            date = SimpleDateFormat(
-                "yyyy-MM-dd hh:mm a",
-                Locale.getDefault()
-            ).format(Calendar.getInstance().time),
-            alarm = alarm,
-            imagePaths = imageList,
-            audioPaths = audioList,
-            audioDuration = audiodurationlist,
-            audioFilename = audioFilenameList
-        )
-        // Insert noteData into database using coroutines
-        GlobalScope.launch(Dispatchers.IO) {
-            notesDao.insert(noteData)
-        }
-        startActivity(Intent(this, MainActivity::class.java))
+            val noteData = Notesdata(
+                title = title,
+                subTitle = subTitle,
+                text = text,
+                date = SimpleDateFormat(
+                    "yyyy-MM-dd hh:mm a",
+                    Locale.getDefault()
+                ).format(Calendar.getInstance().time),
+                alarm = alarm,
+                imagePaths = imageList,
+                audioPaths = audioList,
+                audioDuration = audiodurationlist,
+                audioFilename = audioFilenameList
+            )
+            // Insert noteData into database using coroutines
+            GlobalScope.launch(Dispatchers.IO) {
+                notesDao.insert(noteData)
+            }
+            startActivity(Intent(this, MainActivity::class.java))
         } else {
             // Show a message indicating that at least one field is required
-            Toast.makeText(this, "Sorry, Title and Content fields are required", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Sorry, Title and Content fields are required", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -281,21 +288,25 @@ class AddNoteActivity : AppCompatActivity() {
                     MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
                 addImage(imageBitmap)
             }
-        }else if (requestCode == REQUEST_AUDIO_RECORD && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_AUDIO_RECORD && resultCode == Activity.RESULT_OK) {
             // Handle audio recording completion
             val audioduration = data?.getStringExtra("audioduration")
             val filepath = data?.getStringExtra("filepath")
-            filepath?.let { path ->
-                audioduration?.let { duration ->
-                    var list= listOf(AudioItem(path,duration,path))
-                    audioList.add(path)
-                    audiodurationlist.add(duration)
-                    audioFilenameList.add(path)
-                    audAdapter.setAudioPaths(list)
+            val filename = data?.getStringExtra("filename")
+            filename?.let { name ->
+                filepath?.let { path ->
+                    audioduration?.let { duration ->
+                        audioItems = mutableListOf(AudioItem(path, duration, name))
+                        audioList.add(path)
+                        audiodurationlist.add(duration)
+                        audioFilenameList.add(name)
+                        audAdapter.setAudioPaths(audioItems)
+                    }
                 }
             }
         }
     }
+
     private fun addImage(imageBitmap: Bitmap) {
         if (imageList.size < MAX_IMAGES) {
             val imagePath = saveImageToInternalStorage(imageBitmap)
@@ -306,6 +317,7 @@ class AddNoteActivity : AppCompatActivity() {
             Toast.makeText(this, "Maximum limit reached", Toast.LENGTH_SHORT).show()
         }
     }
+
     private fun saveImageToInternalStorage(bitmap: Bitmap): String {
         val filename = "${System.currentTimeMillis()}.jpg" // Generate unique filename
         val directory = getFilesDir() // Get app's internal storage directory
@@ -369,5 +381,24 @@ class AddNoteActivity : AppCompatActivity() {
         Toast.makeText(this, "Reminder set successfully", Toast.LENGTH_SHORT).show()
 
 
+    }
+
+    override fun onItemClickListener(position: Int) {
+        if (position in audioItems.indices) {
+            audAdapter.notifyDataSetChanged()
+            val file = audioItems[position]
+            val path = file.path
+            val name = file.filename
+            val intent = Intent(this, AudioPlayerActivity::class.java)
+            intent.putExtra("audioPath", path)
+            intent.putExtra("audioName", name)
+            startActivity(intent)
+        } else {
+            // Handle the case where position is invalid
+            Log.e("AddNoteActivity", "Invalid position: $position")
+        }
+    }
+    override fun onItemLongClickListener(position: Int) {
+        Toast.makeText(this, "longclick", Toast.LENGTH_SHORT).show()
     }
 }

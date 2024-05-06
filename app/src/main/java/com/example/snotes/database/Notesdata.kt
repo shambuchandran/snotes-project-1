@@ -15,5 +15,5 @@ data class Notesdata(
     val imagePaths:MutableList<String> = mutableListOf(),
     val audioPaths: MutableList<String> = mutableListOf(),
     val audioDuration: MutableList<String> = mutableListOf(),
-    val audioFilename:MutableList<String> = mutableListOf(),
+    val audioFilename:MutableList<String> = mutableListOf()
 )
