@@ -168,7 +168,7 @@ class AddNoteActivity : AppCompatActivity(), OnItemClickListener {
         imageRecyclerView = binding.rvimage
         imageRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        imgAdaptor = ImageAdapter(this)
+        imgAdaptor = ImageAdapter(this,this)
         imageRecyclerView.adapter = imgAdaptor
 
         audioRecyclerView = binding.rvaudio
@@ -384,19 +384,33 @@ class AddNoteActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClickListener(position: Int) {
-        if (position in audioItems.indices) {
-            audAdapter.notifyDataSetChanged()
-            val file = audioItems[position]
-            val path = file.path
-            val name = file.filename
-            val intent = Intent(this, AudioPlayerActivity::class.java)
-            intent.putExtra("audioPath", path)
-            intent.putExtra("audioName", name)
-            startActivity(intent)
-        } else {
-            // Handle the case where position is invalid
-            Log.e("AddNoteActivity", "Invalid position: $position")
-        }
+//        when(position){
+//            R.layout.audioitem ->{
+//                audAdapter.notifyDataSetChanged()
+//                val file = audioItems[position]
+//                val path = file.path
+//                val name = file.filename
+//                val intent = Intent(this, AudioPlayerActivity::class.java)
+//                intent.putExtra("audioPath", path)
+//                intent.putExtra("audioName", name)
+//                startActivity(intent)
+//
+//            }
+//            R.layout.imageitem ->{
+//
+//            }
+//            else -> Log.e("AddNoteActivity", "Invalid position: $position")
+//
+//        }
+
+        audAdapter.notifyDataSetChanged()
+        val file = audioItems[position]
+        val path = file.path
+        val name = file.filename
+        val intent = Intent(this, AudioPlayerActivity::class.java)
+        intent.putExtra("audioPath", path)
+        intent.putExtra("audioName", name)
+        startActivity(intent)
     }
     override fun onItemLongClickListener(position: Int) {
         Toast.makeText(this, "longclick", Toast.LENGTH_SHORT).show()

@@ -9,14 +9,21 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.snotes.OnItemClickListener
 import com.example.snotes.R
 import com.example.snotes.database.Notedatabase
 
 
-class ImageAdapter(var context: Context):RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
+class ImageAdapter(var context: Context,private val itemClickListener: OnItemClickListener):RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
     private var imagePaths: List<String> = listOf()
-    class ViewHolder(imageview: View):RecyclerView.ViewHolder(imageview) {
+    inner class ViewHolder(imageview: View):RecyclerView.ViewHolder(imageview) {
         val imagevieweach:ImageView= imageview.findViewById(R.id.rcimageview)
+        init {
+            imageview.setOnClickListener {
+                val position=adapterPosition
+                //itemClickListener.onItemClickListener(imagePaths[position].toInt())
+            }
+        }
 
     }
 

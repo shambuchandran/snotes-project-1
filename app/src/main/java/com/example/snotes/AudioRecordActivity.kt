@@ -127,6 +127,7 @@ class AudioRecordActivity : AppCompatActivity() ,Timer.OnTimerChangeListener{
             finish()
 //            startActivity(intent)
         }
+
         bottomsheetbg.setOnClickListener {
             File("$dirpath$filename.mp3").delete()
             dismiss()

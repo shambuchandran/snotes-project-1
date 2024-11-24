@@ -40,7 +40,7 @@ class MainAdapter(private val notesList:MutableList<Notesdata>):RecyclerView.Ada
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                     imageView.scaleType=ImageView.ScaleType.CENTER_CROP
-                    imageView.setImageResource(R.drawable.add_photo)
+                    //imageView.setImageResource(R.drawable.add_photo)
                     viewFlipper.addView(imageView)
                     viewFlipper.startFlipping()
                     android.os.Handler(Looper.getMainLooper()).postDelayed({
